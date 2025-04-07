@@ -1,21 +1,19 @@
 {
-  "author": "sepiropht",
   "name": "auto-subtitle",
-  "version": "1.0.6",
-  "description": "Automatic subtitle of your video",
-  "repository": "https://github.com/sepiropht/auto-subtitle",
-  "main": "index.mjs",
-  "bin": {
-    "auto-subtitle": "./index.mjs"
-  },
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "cli": "node index.mjs"
+    "start": "bun run index.ts"
   },
-  "license": "MIT",
   "dependencies": {
     "argparse": "^2.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "tmp-promise": "^3.0.3",
     "whisper-node": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/argparse": "^2.0.10",
+    "@types/fluent-ffmpeg": "^2.1.21",
+    "bun-types": "^1.2.8"
   }
 }
