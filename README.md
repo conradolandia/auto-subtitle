@@ -1,10 +1,13 @@
 # Automatic subtitles in your videos
 
-This repository uses `ffmpeg` and [OpenAI's Whisper](https://openai.com/blog/whisper) to automatically generate and overlay subtitles on any video.
+This is a fork of the original [sepiropht's](https://github.com/sepiropht) [auto-subtitle](https://github.com/sepiropht/auto-subtitle), converted to TypeScript, divided into ESM modules and adapted to use bun instead of node. This repository uses `ffmpeg` and [OpenAI's Whisper](https://openai.com/blog/whisper) to automatically generate and overlay subtitles on any video.
 
-## Installation
+## Requirements
 
-You'll also need to install [`ffmpeg`](https://ffmpeg.org/), which is available from most package managers:
+- [Bun](https://bun.sh) runtime
+- [FFmpeg](https://ffmpeg.org/)
+
+### Installing FFmpeg
 
 ```bash
 # on Ubuntu or Debian
@@ -17,27 +20,59 @@ brew install ffmpeg
 choco install ffmpeg
 ```
 
+## Installation
+
+1. Clone this repository
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
+3. Install whisper model:
+   ```bash
+   bunx nodejs-whisper download
+   ```
+
 ## Usage
 
-After cloning the project and cd into the directory, first install the model for whisper and choose small, the default model, 
+The basic command to generate subtitles:
 
-if you choose a another model you will need to change too when you call the script.
-   
-    npx whisper-node download
+```bash
+bun run index.ts /path/to/video.mp4 -o output/
+```
 
-The following command will generate a `subtitled/video.mp4` file contained the input video with overlayed subtitles.
+### Available Options
 
-    node index.mjs /path/to/video.mp4 -o subtitled/
+- `--model`: Choose the Whisper model (default: 'small')
+  Available models: `tiny`, `tiny.en`, `base`, `base.en`, `small`, `small.en`, `medium`, `medium.en`, `large`, `large-v1`
+  ```bash
+  bun run index.ts /path/to/video.mp4 --model medium
+  ```
 
-The default setting (which selects the `small` model) works well for transcribing English. You can optionally use a bigger model for better results (especially with other languages). The available models are `tiny`, `tiny.en`, `base`, `base.en`, `small`, `small.en`, `medium`, `medium.en`, `large`.
+- `--language`: Specify the audio language (default: 'auto')
+  ```bash
+  bun run index.ts /path/to/video.mp4 --language ja
+  ```
 
-    node index.mjs  /path/to/video.mp4 --model medium
+- `--task`: Choose between transcription or translation (default: 'transcribe')
+  ```bash
+  bun run index.ts /path/to/video.mp4 --task translate
+  ```
 
-Adding `--task translate` will translate the subtitles into English:
+- `--output_srt`: Generate .srt file alongside the video
+  ```bash
+  bun run index.ts /path/to/video.mp4 --output_srt
+  ```
 
-    node index.mjs /path/to/video.mp4 --task translate
+- `--srt_only`: Only generate the .srt file without creating video
+  ```bash
+  bun run index.ts /path/to/video.mp4 --srt_only
+  ```
+
+- `--subtitle_style`: Customize subtitle appearance
+  ```bash
+  bun run index.ts /path/to/video.mp4 --subtitle_style "FontSize=24,PrimaryColour=&HFFFFFF&"
+  ```
 
 ## License
 
-This script is open-source and licensed under the MIT License. For more details, check the [LICENSE](LICENSE) file.
-
+This project is open-source and licensed under the MIT License. For more details, check the [LICENSE](LICENSE) file.
