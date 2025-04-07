@@ -35,6 +35,7 @@ export function parseArgs(): Args {
       `small.en`,
       `medium`,
       `medium.en`,
+      `large`,
       `large-v1`,
     ],
     help: 'name of the Whisper model to use',

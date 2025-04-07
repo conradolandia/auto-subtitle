@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import tmp from 'tmp-promise';
 import ffmpeg from 'fluent-ffmpeg';
 import { filename } from './utils.ts';
@@ -49,6 +48,12 @@ export async function getSubtitles(
     );
 
     const result = await transcribe(audioPath);
+
+    if (result.length === 0) {
+      console.error(`No subtitles generated for ${filename(path)}`);
+      continue;
+    }
+
     console.log(`Transcription completed for ${filename(path)}`);
 
     fs.writeFileSync(
