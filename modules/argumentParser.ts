@@ -77,7 +77,7 @@ export function parseArgs(): Args {
 
   parser.add_argument('--subtitle_style', {
     type: String,
-    help: 'style of the subtitles to be added to the video',
+    help: 'style of the subtitles to be overlayed into the video (only applies if not using "--srt_only")',
     default: 'OutlineColour=&H40000000,BorderStyle=3',
   });
 
